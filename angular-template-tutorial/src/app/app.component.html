@@ -1,0 +1,242 @@
+<h1>
+  Angular Template Language
+</h1>
+
+<h2>
+  Comm from class template
+</h2>
+
+<h3>
+  Interpolation
+</h3>
+
+<p>
+  {{ 1 + 1 }}
+</p>
+
+<p>
+  {{ 'hello world' }}
+<br/>
+  {{ 'hello world ' + 10 }}
+
+</p>
+
+<p>
+  {{ stringToTemplate }}
+</p>
+<p>
+  {{ sayHelloFromClass() }}
+</p>
+
+<p id="{{generateId()}}">
+  {{ createRandomNumber() }}
+</p>
+
+<h2>
+  another way to transfer from class to template
+</h2>
+
+<p>
+  [domProperty]="non sideeffect expression"
+</p>
+
+<p [innerText]="'hello from dom property innerText'">
+
+</p>
+
+<p [style.background-color]="'red'">
+  this should be colored red
+</p>
+
+<p [class.hidden]="someTimesHidden()">
+ this should be hidden
+</p>
+
+<h2>
+  comm from template to class
+</h2>
+
+<h3>
+  bind events to class
+</h3>
+
+<p>
+  (eventName)="expression with sideeffects"
+</p>
+
+<button (click)="stringToTemplate = 'after button clicked'" >
+  click me
+</button>
+
+<p (mouseover)="mouseOverP($event)" (click)="mouseOverP($event, true)">
+  hover over me!
+</p>
+
+<h2>
+  Two way binding
+</h2>
+
+<input type="text" [value]="twoWayBinding" (input)="twoWayBinding=$event.target.value" />
+{{twoWayBinding}}
+
+<br />
+
+<input type="text" [(ngModel)]="twoWayBinding" />
+
+<h2>
+  Comm parent child
+</h2>
+
+<p>
+  <!--
+    <component-selector [inputProperty]="non sideeffect expression">
+  -->
+</p>
+
+<avaya-child 
+  [messageToChild]="transferMessageToChild" >
+</avaya-child>
+
+<h2>
+  from child to parent
+</h2>
+
+<h3>
+  event in child
+</h3>
+
+<!--
+  <child-selector (eventName)="expression with sideeffect" >
+-->
+<avaya-child 
+  [messageToChild]="transferMessageToChild" 
+  (visibleClicked)="eventInitiatedFromChild($event);">
+
+</avaya-child>
+
+<!--
+<avaya-brother></avaya-brother>
+-->
+
+<avaya-child1></avaya-child1>
+
+
+<h2>
+  two way binding parent child
+</h2>
+
+<!--
+  @Input() propertyInChild
+  @Ouput() propertyInChildChange
+  <child-selector [(propertyInChild)]="public property in parent" ></child-selector>
+--> 
+
+<avaya-child #instanceAvayaChild [(inputFromParent)]="twoWayBindingFromChildParent"></avaya-child>
+{{twoWayBindingFromChildParent}}
+
+<h2 #h2Instance>
+  Passing child instance to parent
+</h2>
+
+<h3 #h3Instance avaya-background avaya-jquery-plugin >
+  Template refrence variable
+</h3>
+
+<p>
+  {{h3Instance.innerText}}
+</p>
+
+<!--
+  <html-element/selecotr-component #stamVar />
+  <html-element/selecotr-component #stamVar="childTemplateReference" />
+-->
+<p>
+  {{instanceAvayaChild.isVisible}}
+</p>
+
+<h2>
+  Built in directives
+</h2>
+
+<h3>
+  ngIf
+</h3>
+
+<!--
+
+  <selector *ngIf="boolean expression" ></selector>
+
+-->
+
+<h5 *ngIf="instanceAvayaChild.isVisible">
+  This will only show if child is visible
+</h5>
+
+<h3>
+  ngFor
+</h3>
+
+<ul>
+  <li *ngFor="let item of groceryList; index as i">
+    {{i}} {{item}}
+  </li>
+</ul>
+
+<h3>
+  ngClass
+</h3>
+
+<!--
+  <div 
+    [class.is-avaya]="boolean expression" 
+    ></div>
+
+
+    
+-->
+
+<div [ngClass]="dictObj" >
+  ng class example
+
+</div>
+
+<h3>
+  ngSubmit
+</h3>
+
+<form (ngSubmit)="sayHello()" >
+  <input type="text" name="title" [(ngModel)]="stamTask.title" #giveMeNgModel="ngModel" />
+  <input type="text" name="description" [(ngModel)]="stamTask.description" #giveMeNgModel="ngModel" />
+  <button type="submit">
+    Click to submit
+  </button>
+</form>
+
+<h3>
+  Pipes
+</h3>
+
+<h4>
+  Built in pipes
+</h4>
+
+<p>
+  {{ stringToTemplate | uppercase }}
+</p>
+
+<p>
+  {{ someDate | date:"HH:mm:ss" }}
+</p>
+
+<p>
+  {{ 'Hello world from snake' | snake }}
+</p>
+
+
+<h3>
+  Safe Navigation Operator
+</h3>
+
+{{ willBeDictionary ? willBeDictionary.title : '' }}
+
+{{ willBeDictionary?.title }}
